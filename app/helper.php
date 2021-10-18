@@ -1,7 +1,7 @@
 <?php
 
 function error_message(){
-    return response()->json(["information"=>"The page not fount"],404);
+    return response()->json(["Bad request"=>"The page not fount"],402);
 }
 function error_message1(){
     return response()->json(["information"=>"The url or parameters is wrong"],404);

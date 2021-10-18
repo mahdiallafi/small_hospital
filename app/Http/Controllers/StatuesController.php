@@ -14,7 +14,7 @@ class StatuesController extends Controller
      */
     public function index()
     {
-        $statues=Statues::all();
+        $statues=Statues::paginate(5);
         return $statues;
     }
 

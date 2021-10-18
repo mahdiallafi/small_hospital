@@ -14,7 +14,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors=Doctor::all();
+        $doctors=Doctor::paginate(5);
         return $doctors;
     }
 

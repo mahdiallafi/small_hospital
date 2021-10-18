@@ -15,7 +15,7 @@ class NotficationController extends Controller
      */
     public function index()
     {
-        $notfications=Notfication::all();
+        $notfications=Notfication::paginate(5);
         return $notfications;
     }
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\NotficationController;
 use App\Http\Controllers\SercodeController;
+use App\Http\Controllers\AuthController;
 
 
 use App\Http\Controllers\DoctorController;
@@ -24,8 +25,11 @@ use App\Http\Controllers\DoctorController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+  Route::post('/logout',[AuthController::class,'logout'] );
+
+  
 });
 
 Route::get('/post/{id}', function(Request $request) {
@@ -78,9 +82,14 @@ Route::get('/services/search/{name}',[ServiceController::class,'search'] );
 //user id 
 Route::get('/users',[UserController::class,'index'] );
 Route::post('/users',[UserController::class,'store'] );
+
 Route::get('/user/{id}/appointments',[UserController::class,'show'] );
 
 Route::delete('/user/{id}',[UserController::class,'destroy'] );
+
+///register
+Route::post('/register',[AuthController::class,'register'] );
+Route::post('/login', [AuthController::class, 'login']);
 
 
 ///Notifcation Api
@@ -106,5 +115,7 @@ Route::put('/{any}',function(Request $request){
   return  error_message2();
 });
 Route::delete('/{any}',function(Request $request){
-  return  error_message3();
+///  return  error_message3();
+return response()->json(["error"=>"wrong"], 405);
+
 });
