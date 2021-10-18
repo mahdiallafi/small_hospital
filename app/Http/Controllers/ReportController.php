@@ -15,7 +15,8 @@ class ReportController extends Controller
     public function index()
     {
         $reports=Report::paginate(5);
-        return $reports;
+      
+        return response()->json($reports, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**

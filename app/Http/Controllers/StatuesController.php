@@ -15,7 +15,8 @@ class StatuesController extends Controller
     public function index()
     {
         $statues=Statues::paginate(5);
-        return $statues;
+     
+        return response()->json($statues, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -53,9 +54,10 @@ class StatuesController extends Controller
      * @param  \App\Models\Statues  $statues
      * @return \Illuminate\Http\Response
      */
-    public function show(Statues $statues)
+    public function show( $statues)
     {
-        //
+        $statues = Statues::findOrFail($statues);
+        return $statues ;
     }
 
     /**

@@ -16,7 +16,8 @@ class ServiceController extends Controller
     public function index()
     {
         $services=service::paginate(5);
-        return $services;
+    
+        return response()->json($services, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**

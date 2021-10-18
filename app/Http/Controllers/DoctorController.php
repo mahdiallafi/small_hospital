@@ -15,7 +15,8 @@ class DoctorController extends Controller
     public function index()
     {
         $doctors=Doctor::paginate(5);
-        return $doctors;
+ 
+        return response()->json($doctors, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -54,9 +55,10 @@ class DoctorController extends Controller
      * @param  \App\Models\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function show(Doctor $doctor)
+    public function show( $doctor)
     {
-        //
+        $doctors = Doctor::findOrFail($doctor);
+        return $doctors ;
     }
 
     /**

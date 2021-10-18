@@ -15,7 +15,8 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments=Appointment::paginate(5);
-        return $appointments;
+      
+        return response()->json($appointments, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**

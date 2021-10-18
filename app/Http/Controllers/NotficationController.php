@@ -16,7 +16,8 @@ class NotficationController extends Controller
     public function index()
     {
         $notfications=Notfication::paginate(5);
-        return $notfications;
+       
+        return response()->json($notfications, 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
