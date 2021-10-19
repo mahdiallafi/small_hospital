@@ -66,19 +66,7 @@ class UserController extends Controller
         return response()->json($user_appointment, 200, [], JSON_PRETTY_PRINT);
       
     }
-    
 
-    public function show_reports($id)
-    {
-        $user = User::where('id', $id)->firstOrFail();
-
-        $user_report = $user->Reports;
-     
-        return response()->json($user_report, 200, [], JSON_PRETTY_PRINT);
-   
-
-
-    }
     /**
      * Show the form for editing the specified resource.
      *
