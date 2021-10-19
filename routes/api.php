@@ -48,7 +48,7 @@ Route::delete('/services/{id}',[ServiceController::class,'destroy'] );
 ///Report Api
 Route::get('/reports',[ReportController::class,'index'] );
 Route::post('/reports',[ReportController::class,'store'] );
-Route::get('/reports/user/{id}',[ReportController::class,'show_reports'] );
+
 Route::post('/report/{id}',[ReportController::class,'show'] );
 Route::put('/reports/{id}',[ReportController::class,'update'] );
 Route::delete('/reports/{id}',[ReportController::class,'destroy'] );
@@ -91,6 +91,7 @@ Route::get('/users',[UserController::class,'index'] );
 Route::post('/users',[UserController::class,'store'] );
 Route::put('/users/{id}',[UserController::class,'update'] );
 Route::get('/user/{id}/appointments',[UserController::class,'show'] );
+Route::get('/reports/user/{id}',[UserController::class,'show_reports'] );
 Route::delete('/user/{id}',[UserController::class,'destroy'] );
 
 ///register
