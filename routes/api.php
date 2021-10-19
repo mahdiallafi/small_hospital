@@ -48,6 +48,8 @@ Route::delete('/services/{id}',[ServiceController::class,'destroy'] );
 ///Report Api
 Route::get('/reports',[ReportController::class,'index'] );
 Route::post('/reports',[ReportController::class,'store'] );
+Route::get('/reports/user/{id}',[ReportController::class,'show_reports'] );
+Route::post('/report/{id}',[ReportController::class,'show'] );
 Route::put('/reports/{id}',[ReportController::class,'update'] );
 Route::delete('/reports/{id}',[ReportController::class,'destroy'] );
 
