@@ -25,12 +25,31 @@ use App\Http\Controllers\DoctorController;
 |
 */
 
+
+///group of functions belognTo admin
+Route::prefix('admin')->group(function () {
+
+});
+
+///group of functions belognTo docto
+Route::prefix('doctor')->group(function () {
+
+});
+
+///group of functions belongTo  user
+Route::prefix('user')->group(function () {
+  
+});
+
+
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
   Route::post('/logout',[AuthController::class,'logout'] );
 
   
 });
+Route::middleware('auth:sanctum')->get("/refresh", [AuthController::class, 'refresh']);
 
 Route::get('/post/{id}', function(Request $request) {
     return $request->id;
@@ -121,7 +140,7 @@ Route::put('/{any}',function(Request $request){
   return  error_message2();
 });
 Route::delete('/{any}',function(Request $request){
-///  return  error_message3();
-return response()->json(["error"=>"wrong"], 405);
+  return  error_message3();
+
 
 });

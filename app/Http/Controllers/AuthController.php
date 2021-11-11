@@ -53,14 +53,31 @@ class AuthController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
+              ///check the the level of users 
+             
+
+
+
+
 
         $token = $user->createToken('myapptoken')->plainTextToken;
+       
 
         $response = [
             'user' => $user,
             'token' => $token
         ];
 
+       
+
         return response($response, 201);
+    }
+    public function refresh(Request $request)
+    {
+        $user = $request->user();
+
+        $user->tokens()->delete();
+
+        return response()->json(['token' => $user->createToken($user->name)->plainTextToken]);
     }
 }
