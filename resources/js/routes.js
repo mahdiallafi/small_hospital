@@ -23,13 +23,13 @@ import Contact from './pages/Contact_us.vue'
             component: Hello,
         },
         {
-            path: '/register',
-            name: 'register',
+            path: '/reg',
+            name: 'reg',
             component: Register,
         },
         {
-            path: '/login',
-            name: 'login',
+            path: '/log',
+            name: 'log',
             component: Login,
         },
         {

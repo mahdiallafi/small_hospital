@@ -26,20 +26,6 @@ use App\Http\Controllers\DoctorController;
 */
 
 
-///group of functions belognTo admin
-Route::prefix('admin')->group(function () {
-
-});
-
-///group of functions belognTo docto
-Route::prefix('doctor')->group(function () {
-
-});
-
-///group of functions belongTo  user
-Route::prefix('user')->group(function () {
-  
-});
 
 
 
@@ -47,7 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
   Route::post('/logout',[AuthController::class,'logout'] );
 
-  
+ 
 });
 Route::middleware('auth:sanctum')->get("/refresh", [AuthController::class, 'refresh']);
 
@@ -56,11 +42,26 @@ Route::get('/post/{id}', function(Request $request) {
 });
 
 
+///group of functions belognTo admin
+Route::group(['middleware'=>['auth','role:admin']],function(){
+
+});
+
+///group of functions belognTo docto
+Route::group(['middleware'=>['auth','role:doctor']],function(){
+
+});
+
+///group of functions belongTo  user
+Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() { 
+  Route::get('/services',[ServiceController::class,'index']);
+  Route::post('/services',[ServiceController::class,'store'] );
+});
 ///services Api
-Route::get('/services',[ServiceController::class,'index'] );
+
 Route::get('/service/{id}/doctors',[ServiceController::class,'show_List'] );
 Route::get('/service/{id}',[ServiceController::class,'show'] );
-Route::post('/services',[ServiceController::class,'store'] );
+
 Route::put('/services/{id}',[ServiceController::class,'update'] );
 Route::delete('/services/{id}',[ServiceController::class,'destroy'] );
 

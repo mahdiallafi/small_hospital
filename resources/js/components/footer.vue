@@ -1,6 +1,6 @@
 <template>
-  <v-footer app bottom fixed padless>
-    <v-row justify="center" no-gutters>
+  <div>
+    <v-row justify="center" >
       <v-col>
         <v-img
           class="logoimage"
@@ -9,12 +9,24 @@
           src="./asset/app.png"
         >
         </v-img>
-        <p class="ml-5">our application help you to use the</p>
+        <p class="ml-5">
+          our application help you to find the <br />service you look for and
+          book appointment.
+        </p>
+      </v-col>
+
+      <v-col>
+        <h4 class="mt-2">Address</h4>
+        <ul>
+          <p><font-awesome-icon icon="phone-volume" />   +123456789</p>
+          <p><font-awesome-icon icon="envelope-square"/>  clin@info.lt</p>
+          <p><font-awesome-icon icon="home" />   kaunas,lithunia</p>
+        </ul>
       </v-col>
       <v-col>
         <h4 class="mt-2">Links</h4>
         <ul>
-          <li v-for="item in items" v-bind:key="item">{{item.it}} </li>
+          <li v-for="item in items" v-bind:key="item">{{ item.it }}</li>
         </ul>
       </v-col>
 
@@ -23,16 +35,14 @@
         {{ new Date().getFullYear() }} <strong>clin@copyright</strong>
       </v-col>
     </v-row>
-  </v-footer>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      items: [
-          {it:"serice"},{it: "About us"},{it: "Contact us"}
-      ],
+      items: [{ it: "serice" }, { it: "About us" }, { it: "Contact us" }],
     };
   },
 };

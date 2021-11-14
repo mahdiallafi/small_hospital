@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\service;   
 use App\Models\Sercode;   
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -15,9 +16,13 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services=service::paginate(5);
+      $services=service::paginate(5);
+   
     
-        return response()->json($services, 200, [], JSON_PRETTY_PRINT);
+      return response()->json($services, 200, [], JSON_PRETTY_PRINT);
+       
+
+        
     }
 
     /**
