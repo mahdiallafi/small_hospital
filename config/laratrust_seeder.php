@@ -25,7 +25,7 @@ return [
             'reports'=>'c'
         ],
         'user' => [
-            'users'=>'c,r,u,d'
+            'users'=>'c,r,u,d',
             'services' => 'r',
             'reports' => 'c',
             'appointments' => 'c',
