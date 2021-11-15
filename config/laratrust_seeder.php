@@ -13,16 +13,23 @@ return [
 
     'roles_structure' => [
         'admin' => [
-            'users' => 'c,r,u,d',
-            'service' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'users' => 'r,c,u,d',
+            'services' => 'c,r,u,d',
+            'reports' => 'r,d',
+            'notfication'=>'c,u,d'
         ],
         'doctor' => [
             'users' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'doctors' => 'c,r,u,d',
+            'statues' => 'c,r,u,d',
+            'reports'=>'c'
         ],
         'user' => [
-            'profile' => 'r,u',
+            'users'=>'c,r,u,d'
+            'services' => 'r',
+            'reports' => 'c',
+            'appointments' => 'c',
+            'notfication'=>'r'
         ]
     ],
 
