@@ -1,20 +1,83 @@
 <template>
-<div class="d-flex justify-content-center pt-10">
-
-
-  <div style="max-width: 19rem; min-width: 19rem; background-color: #E5E5E5;" class="p-3">
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field label="User name"></v-text-field>
-      <v-text-field type="email" label="E-mail" required></v-text-field>
-      <v-text-field label="Password"></v-text-field>
-      <v-text-field label="Confirm password"></v-text-field>
-    </v-form>
+<div>
+<div class="row justify-content-center" >
+  <div class="col-md-6">
+<div class="card">
+  <div class="card-header">
+    Register
   </div>
+  <div class="card-body">
+    <form action="#" @submit.prevent="register">
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" placeholder="name" v-model="formData.name">
+         <p class="text-danger" v-text="errors.name"></p>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="email" placeholder="email" v-model="formData.email">
+    <p class="text-danger" v-text="errors.email"></p>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" name="password" placeholder="password" v-model="formData.password">
+    <p class="text-danger" v-text="errors.password"></p>
+    </div>
+     <div class="form-group">
+      <input type="password" class="form-control" name="password_confirmation" placeholder="password_confirmation" v-model="formData.password_confirmation">
+    <p class="text-danger" v-text="errors.password"></p>
+    </div>
+    <div class="form-group">
+     <select name="role" v-model="formData.role">
+       <option value="user">patient</option>
+       <option value="doctor">doctor</option>
+     </select>
+      <p class="text-danger" v-text="errors.role"></p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <button type="submit"  class="btn btn-primary">Register</button>
+      </div>
+    </div>
+    </form>
   </div>
+</div>
+
+  </div>
+</div>
+
+</div>
 </template>
 
 <script>
-export default {};
+import axios from 'axios'
+export default {
+data(){
+  return{
+    formData:{
+      name:'',
+      email:'',
+      password:'',
+      password_confirmation:'',
+      role:'',
+    },
+    errors:{}
+  }
+},
+methods:{
+  register(){
+      axios.post('api/register',this.formData).then((response)=>{
+        console.log(response.data)
+        this.formData.name=this.formData.email=this.formData.password=this.formData.password_confirmation=''
+        this.errors={}
+        this.$router.push('/log')
+        this.$toaster.success('Account created')
+      
+      }).catch((errors)=>{
+         this.errors=errors.response.data.errors
+         console.log(errors.response.data.errors)
+      })
+  }
+}
+
+};
 </script>
 
 <style>

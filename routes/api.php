@@ -26,22 +26,20 @@ use App\Http\Controllers\DoctorController;
 */
 
 
-
-
-
-Route::group(['middleware' => ['auth:sanctum']], function () {
-
-  Route::post('/logout',[AuthController::class,'logout'] );
-
- 
+Route::middleware('auth:sanctum')->get("/user",function(Request $request){
+  return $request->user();
 });
+
+
+
+ Route::post('/logout',[AuthController::class,'logout'] )->middleware('auth:sanctum');
+
+
 Route::middleware('auth:sanctum')->get("/refresh", [AuthController::class, 'refresh']);
 
 Route::get('/post/{id}', function(Request $request) {
     return $request->id;
 });
-
-
 ///group of functions belognTo admin
 Route::group(['middleware'=>['auth:sanctum','role:admin']],function(){
   /// service 
@@ -58,6 +56,8 @@ Route::group(['middleware'=>['auth:sanctum','role:admin']],function(){
   Route::get('/notifcations',[NotficationController::class,'index'] );
   Route::post('/notifcations',[NotficationController::class,'store'] );
   Route::put('/notifcations/{id}',[NotficationController::class,'update'] );
+  //liat of appointment
+  Route::get('/appointment',[AppointmentController::class,'index'] );
 });
 
 ///group of functions belognTo docto
@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() {
  Route::put('/reports/{id}',[ReportController::class,'update'] );
  Route::delete('/reports/{id}',[ReportController::class,'destroy'] );
 ///appointment
- Route::get('/appointment',[AppointmentController::class,'index'] );
+
  Route::get('/appointment/{id}',[AppointmentController::class,'show'] );
  Route::post('/appointment',[AppointmentController::class,'store'] );
  Route::put('/appointment/{id}',[AppointmentController::class,'update'] );

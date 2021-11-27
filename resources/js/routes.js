@@ -13,7 +13,7 @@ import Contact from './pages/Contact_us.vue'
 
    const routes= [
         {
-            path: '/homes',
+            path: '/',
             name: 'homes',
             component: Home
         },

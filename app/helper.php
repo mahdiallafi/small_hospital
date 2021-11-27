@@ -12,7 +12,9 @@ function error_message2(){
 function error_message3(){
     return response()->json(["error message"=>"you dont have this permission"],405);
 }
-
+ function check_token(){
+    $token = $user->createToken('myapptoken')->plainTextToken;
+ }
 
 
 

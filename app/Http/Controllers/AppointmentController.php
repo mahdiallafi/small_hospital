@@ -81,10 +81,16 @@ class AppointmentController extends Controller
     public function update(Request $request,  $appointment)
     {
       
-   
+           if(Auth::user()==check_token()){
         $appointments= Appointment::find($appointment);
         $appointments->update($request->all());
         return  $appointments;
+           }
+           else
+           {
+                return "you have no right to update";
+
+           }
 
    
     }

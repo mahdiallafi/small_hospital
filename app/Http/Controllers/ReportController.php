@@ -81,9 +81,16 @@ class ReportController extends Controller
     public function update(Request $request,  $report)
     {
        
+        
         $reports= Report::find($report);
+        if(auth()->user()==$reports->user){
         $reports->update($request->all());
         return  $reports;
+        }
+        else
+        {
+            return "no right ";
+        }
     }
 
     /**

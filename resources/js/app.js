@@ -12,6 +12,9 @@ Vue.use(VueRouter)
 import router from './routes'
 import App from './components/App'
 import vuetify from './vuetify';
+function loggedIn(){
+    return localStorage.getItem('token')
+}
 
 const app = new Vue({
     el: '#app',

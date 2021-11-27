@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -25,40 +26,46 @@ class AuthController extends Controller
             'role' => $fields['role']
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+     //   $token = $user->createToken('myapptoken')->plainTextToken;
        /// $user->attachRole('user'); 
         //later we will make doctor or patient
         $user->attachRole($request->role);
         $response = [
             'user' => $user,
-            'token' => $token
+     ///       'token' => $token
         ];
 
         return response($response, 201);
     }
     public function logout(Request $request) {
-        auth()->user()->tokens()->delete();
-
+          ///auth()->user()->tokens()->delete();
+          $request->user()->currentAccessToken()->delete();
         return [
             'message' => 'Logged out'
         ];
     }
     public function login(Request $request) {
-        $fields = $request->validate([
+        $request->validate([
             'email' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'device_name'=>'required',
         ]);
 
         // Check email
-        $user = User::where('email', $fields['email'])->first();
+        $user = User::where('email', $request->email)->first();
 
         // Check password
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
+        if(!$user || !Hash::check( $request->password, $user->password)) {
+           throw validationException::withMessages([
+               'email'=>['inncorect ']
+           ]);
+            /*  return response([
+               
                 'message' => 'Bad creds'
-            ], 401);
+            ], 401); */
         }
-        $token = $user->createToken('myapptoken')->plainTextToken;
+      /// $token = $user->createToken('myapptoken')->plainTextToken;
+       $token = $user->createToken($request->device_name)->plainTextToken;
         $response = [
             'user' => $user,
             'token' => $token

@@ -11,6 +11,8 @@
   <router-view v-slot="{ Component }">
     <component :is="Component"/>
   </router-view>
+
+
  <Footer/>
 </v-app>
  
@@ -26,7 +28,9 @@ import Navbar from './Navbar.vue';
 import Footer from './footer.vue';
 export default {
   data() {
-    return {};
+    return {
+     
+    };
   },
   components:{
     Navbar,
