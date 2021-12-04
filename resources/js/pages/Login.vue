@@ -29,9 +29,7 @@
 
               <div class="row">
                 <div class="col-md-6">
-                  <button type="submit" class="btn btn-primary">
-                    login
-                  </button>
+                  <button type="submit" class="btn btn-primary">login</button>
                 </div>
               </div>
             </form>
@@ -55,12 +53,37 @@ data(){
     errors:{}
   }
 },
-methods:{
+methods:{ 
   login(){
       axios.post('api/login',this.formData).then((response)=>{
       console.log(response.data.token)         
      localStorage.setItem('token', response.data.token)
-     this.$router.push('/')
+     axios.get('/api/user', {
+       headers: {
+         Authorization: "Bearer " + response.data.token,
+       }
+     })
+     .then((response)=> {
+       console.log(response)
+       if(response.data.role=='doctor') {
+         this.$router.push({
+           path:'/hello', 
+           params: response.data,
+         })
+        }
+       if(response.data.role=='user') {
+         this.$router.push({
+           path:'/', 
+           params: response.data,
+         },)
+       }if(response.data.role=='admin')
+       {
+         this.$router.push({
+           path:'admin', 
+           params: response.data,
+         },)
+       }
+     })
       }).catch((errors)=>{
          this.errors=errors.response.data.errors
          

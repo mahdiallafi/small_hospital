@@ -6,7 +6,7 @@
  
 <v-app>
 
-  <Navbar />
+
 
   <router-view v-slot="{ Component }">
     <component :is="Component"/>

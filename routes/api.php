@@ -29,7 +29,9 @@ use App\Http\Controllers\DoctorController;
 Route::middleware('auth:sanctum')->get("/user",function(Request $request){
   return $request->user();
 });
-
+Route::middleware('auth:sanctum')->get("/authenticated",function(){
+  return true;
+});
 
 
  Route::post('/logout',[AuthController::class,'logout'] )->middleware('auth:sanctum');
@@ -51,7 +53,7 @@ Route::group(['middleware'=>['auth:sanctum','role:admin']],function(){
   ///list of doctors
   Route::get('/doctor',[DoctorController::class,'index'] );
   //list of doctor belongto service 
-  Route::get('/service/{id}/doctors',[ServiceController::class,'show_List'] );
+  Route::get('/reports',[ReportController::class,'index'] );
   ///notifcations
   Route::get('/notifcations',[NotficationController::class,'index'] );
   Route::post('/notifcations',[NotficationController::class,'store'] );
@@ -84,7 +86,7 @@ Route::group(['middleware'=>['auth:sanctum','role:doctor']],function(){
 ///group of functions belongTo  user
 Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() { 
  ///Report Api
- Route::get('/reports',[ReportController::class,'index'] );
+
  Route::post('/reports',[ReportController::class,'store'] );
  Route::post('/report/{id}',[ReportController::class,'show'] );
  Route::put('/reports/{id}',[ReportController::class,'update'] );
@@ -97,10 +99,10 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() {
  Route::delete('/appointment/{id}',[AppointmentController::class,'destroy'] );
 //user id 
 
- Route::post('/users',[UserController::class,'store'] );
- Route::put('/users/{id}',[UserController::class,'update'] );
+
+
  Route::get('/user/{id}/appointments',[UserController::class,'show'] );
- Route::delete('/user/{id}',[UserController::class,'destroy'] );
+
  ///Notifcation Api
  Route::get('/notifcation/{id}',[NotficationController::class,'show'] );
  Route::get('/notifcation/user/{id}',[NotficationController::class,'show_List'] );
@@ -108,12 +110,20 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() {
  Route::delete('/notifcations',[NotficationController::class,'destroyAll'] );
 });
 
-////for guest and whole role
+////commmon between user and doctor
+Route::group(['middleware'=>['auth:sanctum','role:user|doctor|admin']],function(){
+  Route::get('/users/{id}',[UserController::class,'showuser'] );
+  Route::post('/users',[UserController::class,'store'] );
+  Route::put('/users/{id}',[UserController::class,'update'] );
+  Route::delete('/user/{id}',[UserController::class,'destroy'] );
+});
+
+
 
 ///services Api
 Route::get('/services',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'show'] );
-
+Route::get('/service/{id}/doctors',[ServiceController::class,'show_List'] );
 ///search Api
 Route::get('/services/search/{name}',[ServiceController::class,'search'] );
 

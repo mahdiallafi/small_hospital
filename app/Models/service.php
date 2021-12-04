@@ -9,7 +9,7 @@ class service extends Model
 {
     use HasFactory;
     protected $fillable=[
-'service_name','clinic_name','clinic_location',
+'service_name'/* ,'clinic_name','clinic_location' */,
 
     ];
     public function doctors(){

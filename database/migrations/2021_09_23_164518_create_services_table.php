@@ -17,8 +17,8 @@ class CreateServicesTable extends Migration
             
             $table->BigIncrements('id');
             $table->string('service_name');
-            $table->string('clinic_name');
-            $table->string('clinic_location');
+            /* $table->string('clinic_name');
+            $table->string('clinic_location'); */
                   
             $table->timestamps();
         });

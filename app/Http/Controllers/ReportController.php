@@ -14,8 +14,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports=Report::paginate(5);
-      
+        /**  user userreport function in the report class to access the name the user instead of id  */
+        $reports=Report::with(['userreport'])->paginate(5);  
         return response()->json($reports, 200, [], JSON_PRETTY_PRINT);
     }
 

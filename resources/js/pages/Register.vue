@@ -29,6 +29,7 @@
        <option value="user">patient</option>
        <option value="doctor">doctor</option>
      </select>
+     {{formData.role}}
       <p class="text-danger" v-text="errors.role"></p>
     </div>
     <div class="row">
@@ -42,6 +43,10 @@
 
   </div>
 </div>
+
+<pre>
+  {{formData}}
+</pre>
 
 </div>
 </template>
@@ -63,18 +68,24 @@ data(){
 },
 methods:{
   register(){
-      axios.post('api/register',this.formData).then((response)=>{
+      axios.post('/api/register',this.formData).then((response)=>{
         console.log(response.data)
-        this.formData.name=this.formData.email=this.formData.password=this.formData.password_confirmation=''
+        
         this.errors={}
-        this.$router.push('/log')
+        var $statues=this.formData.role
+        console.log($statues)
+        if($statues == 'doctor'){
+            this.$router.push('/hello')   
+        }else {
+        this.$router.push('/')
+        }
         this.$toaster.success('Account created')
       
       }).catch((errors)=>{
          this.errors=errors.response.data.errors
          console.log(errors.response.data.errors)
       })
-  }
+  },
 }
 
 };

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+	   <Navbar />
     <button v-if="isLoggedIn" class="btn btn-danger" @click="logout">
       Logout
     </button>
@@ -13,6 +14,7 @@
 </template>
 <script>
 import axios from "axios";
+import Navbar from "../components/Navbar.vue"
 export default {
   data() {
     return {
@@ -22,6 +24,10 @@ export default {
       loading: true,
     };
   },
+  components:{
+       Navbar
+  }
+  ,
   methods: {
     checkLoginStatus() {
       // this.loading = true
@@ -33,6 +39,11 @@ export default {
         })
         .then((response) => {
           this.currentUser = response.data;
+          var statues = this.currentUser.role;
+          console.log(statues);
+          
+          ///   this.$toaster.success('Account created')
+
           console.log("LOGGED IN");
           this.isLoggedIn = true;
         })
@@ -44,22 +55,24 @@ export default {
     },
     logout() {
       axios
-        .post("api/logout", {}, {
-          headers: {
-            Authorization: "Bearer " + this.token,
-          },
-        })
+        .post(
+          "api/logout",
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + this.token,
+            },
+          }
+        )
         .then((response) => {
-          console.log(response)
-		  localStorage.removeItem("token");
-		  this.isLoggedIn = false;
+          console.log(response);
+          localStorage.removeItem("token");
+          this.isLoggedIn = false;
         })
         .catch((errors) => {
           console.log("it is not working");
-		  console.log(errors)
+          console.log(errors);
         });
-
-		
     },
   },
   mounted() {

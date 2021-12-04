@@ -16,5 +16,9 @@ public function users(){
    return $this->belongsTo(User::class);
     }
 }
+public function userreport()
+{
+    return $this->belongsTo(User::class,'user_id');
+}
 
 }

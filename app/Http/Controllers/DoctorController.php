@@ -41,7 +41,7 @@ class DoctorController extends Controller
             'name'=>'required',
             'age'=>'required',
             'eamil'=>'required',
-            'Free-days'=>'required',
+            'Free_days'=>'required',
             'service_id'=>'required',
           
               ]);

@@ -73,9 +73,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function showuser( $user)
     {
-       
+        $users=User::findorFail($user);
+        return $users;
     }
 
     /**

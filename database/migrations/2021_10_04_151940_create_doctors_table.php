@@ -18,7 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->string('name');
             $table->integer('age');
             $table->string('eamil');
-            $table->string('Free-days');
+            $table->string('Free_days');
           //  $table->unsignedBigInteger('service-id');
             $table->foreignId('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();

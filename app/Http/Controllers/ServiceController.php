@@ -45,8 +45,8 @@ class ServiceController extends Controller
     {
         $request->validate([
             'service_name'=>'required',
-            'clinic_name'=>'required',
-            'clinic_location'=>'required',
+           /*  'clinic_name'=>'required',
+            'clinic_location'=>'required', */
            /// 'Category_name'=>'required',
 
 

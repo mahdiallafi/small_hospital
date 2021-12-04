@@ -12,6 +12,8 @@ Vue.use(VueRouter)
 import router from './routes'
 import App from './components/App'
 import vuetify from './vuetify';
+import Swal from 'sweetalert2'
+window.Swal=Swal
 function loggedIn(){
     return localStorage.getItem('token')
 }
