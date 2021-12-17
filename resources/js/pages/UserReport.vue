@@ -1,19 +1,21 @@
 <template>
 <div>
-    hello {{$route.params.id}}
-  <div class="row justify-content-center" >
+  <!--   hello {{$route.params.id}} -->
+  <div class="row justify-content-center my-4" >
   <div class="col-md-6">
 <div class="card">
   <div class="card-header">
-    Register
+   Report problem 
   </div>
   <div class="card-body">
     <form action="#" @submit.prevent="createReport">
     <div class="form-group">
+      <label for="">Title</label>
       <input type="text" class="form-control" name="title" placeholder="title" v-model="formData.title">
         
     </div>
     <div class="form-group">
+      <label for="">body</label>
       <input type="text" class="form-control" name="body" placeholder="body" v-model="formData.body">
     </div>
     
@@ -23,7 +25,7 @@
    
     <div class="row">
       <div class="col-md-6">
-        <button type="submit"  class="btn btn-primary">Update</button>
+        <button type="submit"  class="btn btn-primary">submit</button>
       </div>
     </div>
     </form>
@@ -69,6 +71,14 @@ export default {
      
     }).then(response=>{
       console.log(response)
+      Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'we recived your report',
+  showConfirmButton: false,
+  timer: 1500
+})
+ this.$router.push('/service')
     }).catch(error =>{
       console.log(error)
     })

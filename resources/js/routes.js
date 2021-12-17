@@ -14,8 +14,16 @@ import serviceadmin from './pages/Admin/serviceadmin'
 import Users from './pages/Admin/Users'
 import CreateService from './pages/Admin/CreateService'
 import UpdateService from './pages/Admin/UpdateService'
+import DoctorHome from './pages/Doctor/doctorHomePage'
+import DoctorService from './pages/Doctor/doctorService'
+import CreateDoctorService from './pages/Doctor/CreateDoctorService'
+import UpdateDoctorService from './pages/Doctor/UpdateDoctorService'
+import DoctorAppointment from './pages/Doctor/DoctorAppointment'
+//import UpdateService from './pages/Admin/UpdateService'
 import Report from './pages/Admin/Report'
 import UserReport from './pages/UserReport'
+import Appointment from './pages/Appointment'
+import UserAppointment from './pages/UserAppointment'
 
 import routers from 'vue-router'; 
 import axios from 'axios';
@@ -122,6 +130,54 @@ routers.prototype.push = function push(location) {
             component: UserReport,
            
         },
+        {
+            path: '/UserReport/:id',
+            name: 'UserReport',
+            component: UserReport,
+           
+        },
+        {
+            path: '/DoctorHome',
+            name: 'DoctorHome',
+            component: DoctorHome,
+           
+        },
+        {
+            path: '/DoctorService/:id',
+            name: 'DoctorService',
+            component: DoctorService,
+           
+        },
+        {
+            path: '/CreateDoctorService',
+            name: 'CreateDoctorService',
+            component: CreateDoctorService,
+           
+        },
+       {
+            path: '/UpdateDoctorService/:id',
+            name: 'UpdateDoctorService',
+            component: UpdateDoctorService,
+           
+        }, 
+       {
+            path: '/Appointment/:id',
+            name: 'Appointment',
+            component: Appointment,
+           
+        }, 
+       {
+            path: '/UserAppointment/:id',
+            name: 'UserAppointment',
+            component: UserAppointment,
+           
+        }, 
+       {
+            path: '/DoctorAppointment/:id',
+            name: 'DoctorAppointment',
+            component: DoctorAppointment,
+           
+        }, 
         
     ]
     

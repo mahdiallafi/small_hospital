@@ -28,19 +28,26 @@
         </div>
     </div>
 </div> -->
-  <div>
-    <Navbar />
+<div>
+  <Navbar/>
 
-    <v-row class="p-5">
+<div class="my-10">
+   
+
+  <div>
+      <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
+
+    <div class="container-sm d-flex flex-wrap">
       <v-card
         v-for="service in services"
         v-bind:key="service.id"
-        class="mx-auto"
-        max-width="294"
+        class="mx-auto my-5 items"
+        max-width="15rem"
+        min-width="15rem"
       >
         <v-img
           src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="100px"
+          height="10rem"
         ></v-img>
 
         <v-card-title>
@@ -65,8 +72,8 @@
           </div>
         </v-expand-transition>
       </v-card>
-    </v-row>
-  </div>
+    </div>
+  </div></div></div>
 </template>
 
 <script>
@@ -107,4 +114,5 @@ export default {
 </script>
 
 <style>
+
 </style>

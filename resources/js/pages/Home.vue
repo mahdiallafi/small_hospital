@@ -1,7 +1,8 @@
 <template>
+
   <v-container>
-	   <Navbar />
-    <button v-if="isLoggedIn" class="btn btn-danger" @click="logout">
+	  
+   <!--  <button v-if="isLoggedIn" class="btn btn-danger" @click="logout">
       Logout
     </button>
     <div v-if="isLoggedIn && !loading">
@@ -9,7 +10,7 @@
     </div>
     <div v-if="!isLoggedIn && !loading">You are unauthorized</div>
     <h5 class="text-center">Welcome to the SPA in Laravel & Vue JS</h5>
-    <p class="text-center">{{ currentUser.email }}</p>
+    <p class="text-center">{{ currentUser.email }}</p> -->
   </v-container>
 </template>
 <script>

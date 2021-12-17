@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
-
+use DB;
 class DoctorController extends Controller
 {
     /**
@@ -38,12 +40,11 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'age'=>'required',
-            'eamil'=>'required',
+            'clinic_name'=>'required',
+            'clinic_location'=>'required',
             'Free_days'=>'required',
             'service_id'=>'required',
-          
+            'user_id'=>'required',
               ]);
              
               return  Doctor::create($request->all());
@@ -59,6 +60,20 @@ class DoctorController extends Controller
     {
         $doctors = Doctor::findOrFail($doctor);
         return $doctors ;
+    }
+    public function item( $id)
+    {
+     $user=Doctor::with(['servicenames'])->where('user_id', $id)->latest()->get();  
+
+       // $user = Doctor::where('user_id', $id)->latest()->get();
+        return $user;
+    }
+
+    public function items( $id)
+    {
+        $user=Appointment::with(['username'])->where('doctor_id', $id)->latest()->get();  
+      ///  $user = Appointment::where('doctor_id', $id)->latest()->get();
+        return $user;
     }
 
     /**

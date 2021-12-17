@@ -41,56 +41,58 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-data(){
-  return{
-    formData:{
-      email:'',
-      password:'',
-     device_name:'browser'
+  data() {
+    return {
+      formData: {
+        email: "",
+        password: "",
+        device_name: "browser",
+      },
+      errors: {},
+    };
+  },
+  methods: {
+    login() {
+      axios
+        .post("api/login", this.formData)
+        .then((response) => {
+          console.log(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          axios
+            .get("/api/user", {
+              headers: {
+                Authorization: "Bearer " + response.data.token,
+              },
+            })
+            .then((response) => {
+              console.log(response);
+              if (response.data.role == "doctor") {
+                this.$router.push({
+                  path: "/DoctorHome",
+                  params: response.data,
+                });
+              }
+              if (response.data.role == "user") {
+                this.$router.push({
+                  path: "/service",
+                  params: response.data,
+                });
+              }
+              if (response.data.role == "admin") {
+                this.$router.push({
+                  path: "admin",
+                  params: response.data,
+                });
+              }
+            });
+        })
+        .catch((errors) => {
+          this.errors = errors.response.data.errors;
+        });
     },
-    errors:{}
-  }
-},
-methods:{ 
-  login(){
-      axios.post('api/login',this.formData).then((response)=>{
-      console.log(response.data.token)         
-     localStorage.setItem('token', response.data.token)
-     axios.get('/api/user', {
-       headers: {
-         Authorization: "Bearer " + response.data.token,
-       }
-     })
-     .then((response)=> {
-       console.log(response)
-       if(response.data.role=='doctor') {
-         this.$router.push({
-           path:'/hello', 
-           params: response.data,
-         })
-        }
-       if(response.data.role=='user') {
-         this.$router.push({
-           path:'/', 
-           params: response.data,
-         },)
-       }if(response.data.role=='admin')
-       {
-         this.$router.push({
-           path:'admin', 
-           params: response.data,
-         },)
-       }
-     })
-      }).catch((errors)=>{
-         this.errors=errors.response.data.errors
-         
-      })
-  }
-}
-
+  },
 };
 </script>
 

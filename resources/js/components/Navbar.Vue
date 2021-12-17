@@ -1,47 +1,45 @@
 <template>
-  <!-- <div>
-  this is navbar
-</div> -->
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="light">
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">
+        <v-img
+          class="logoimage"
+          max-height="50"
+          max-width="150"
+          src="./asset/app.png"
+        >
+        </v-img
+      ></b-navbar-brand>
+
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <v-img
-        class="logoimage"
-        max-height="50"
-        max-width="150"
-        src="./asset/app.png"
-      >
-      </v-img>
       <b-collapse id="nav-collapse" is-nav>
-        <v-row class="justify-content align-items-center">
-          <b-navbar-nav>
-            <b-nav-item class="item"
-              ><router-link class="col" :to="{ name: 'hello' }"
-                >Home</router-link
-              >
-            </b-nav-item>
-            <b-nav-item class="item"
-              ><router-link class="col" :to="{ name: 'service' }"
-                >Services</router-link
-              >
-            </b-nav-item>
-            <b-nav-item class="item"
+        <b-navbar-nav>
+          <b-nav-item
+            ><router-link class="col" :to="{ name: 'service' }"
+              >Home</router-link
+            ></b-nav-item
+          >
+
+          <!-- <b-nav-item
+            ><router-link class="col" :to="{ name: 'service' }"
+              >Services</router-link
+            >
+          </b-nav-item> -->
+          <!-- <b-nav-item 
               ><router-link class="col" :to="{ name: 'about' }"
                 >About us</router-link
               >
-            </b-nav-item>
-            <b-nav-item class="item"
-              ><router-link class="col" :to="{ name: 'contact' }"
-                >Contact us</router-link
-              >
-            </b-nav-item>
-          </b-navbar-nav>
-        </v-row>
-
-              
-        <b-navbar-nav v-if="!isLoggedIn && !loading">
-          <b-nav-item class="item"
+            </b-nav-item> -->
+          <b-nav-item
+            ><router-link class="col" :to="{ name: 'contact' }"
+              >Contact
+            </router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="options"  right v-if="(!isLoggedIn && !loading) ">
+          
+              <b-nav-item class="item"
             ><router-link class="col" :to="{ name: 'reg' }"
               >Register</router-link
             >
@@ -49,38 +47,88 @@
           <b-nav-item class="item"
             ><router-link class="col" :to="{ name: 'log' }">Login</router-link>
           </b-nav-item>
+        
         </b-navbar-nav>
-
-        <b-nav-item-dropdown
-          class="profileMenu"
-          :text="currentUser.name"
-          right
-          v-if="isLoggedIn && !loading || $route.params.name"
-        >
-          <b-dropdown-item></b-dropdown-item>
-          <b-dropdown-item ><router-link 
-                                        :to="{
-                                            name: 'UserDetails',
-                                            params: { id: currentUser.id }
-                                        }"
-                                      
-                                        >Account</router-link
-                                    ></b-dropdown-item>
-         
-          <b-dropdown-item ><router-link 
-                                        :to="{
-                                            name: 'UserReport',
-                                            params: { id: currentUser.id }
-                                        }"
-                                      
-                                        >Report problem</router-link
-                                    ></b-dropdown-item>
-          <b-dropdown-item>
-            <button  class="btn btn-danger" @click="logout">
-              Logout
-            </button>
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown
+            right
+            :text="currentUser.name"
+            v-if="(isLoggedIn && !loading) || $route.params.name"
+          >
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              {{currentUser.name}}
+             <v-icon
+      large
+      text 
+      color="teal darken-2"
+    >
+ 
+      mdi-account
+    </v-icon>
+            </template>
+            <b-dropdown-item
+              ><router-link class="item"
+                :to="{
+                  name: 'UserDetails',
+                  params: { id: currentUser.id },
+                }"
+                ><v-icon
+      large
+      text 
+      color="teal darken-2"
+    >
+ 
+      mdi-account-circle
+    </v-icon>Account</router-link
+              ></b-dropdown-item
+            >
+<hr>
+            <b-dropdown-item
+              ><router-link class="item"
+                :to="{
+                  name: 'UserReport',
+                  params: { id: currentUser.id },
+                }"
+                ><v-icon
+      large
+      text 
+      color="teal darken-2"
+    >
+ 
+      mdi-typewriter
+    </v-icon>Report problem</router-link 
+              ></b-dropdown-item
+            >
+            <hr>
+            <b-dropdown-item
+              ><router-link class="item"
+                :to="{
+                  name: 'UserAppointment',
+                  params: { id: currentUser.id },
+                }"
+                ><v-icon
+      large
+      text 
+      color="teal darken-2"
+    >
+ 
+      mdi-clipboard-text-clock
+    </v-icon>My appointment</router-link
+              ></b-dropdown-item
+            >
+<hr>
+            <button class="btn btn-danger logout item" @click="logout"><v-icon
+      large
+      text 
+      color="teal darken-2"
+    >
+ 
+      mdi-logout
+    </v-icon>Logout</button>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
@@ -111,7 +159,7 @@ export default {
           this.currentUser = response.data;
           console.log("LOGGED IN");
           this.isLoggedIn = true;
-		  console.log( response.data.id)
+          console.log(this.currentUser.id);
         })
         .catch((errors) => {
           console.log(errors);
@@ -137,7 +185,7 @@ export default {
           console.log(response);
           localStorage.removeItem("token");
           this.isLoggedIn = false;
-		  this.$router.push('/')
+          this.$router.push("/");
         })
         .catch((errors) => {
           console.log("it is not working");
@@ -150,13 +198,13 @@ export default {
     this.checkLoginStatus();
   },
   updated() {
-	  console.log(this.isLoggedIn)
+    console.log(this.isLoggedIn);
   },
   watch: {
-	  $route(to, from) {
-		  this.checkLoginStatus();
-	  }
-  }
+    $route(to, from) {
+      this.checkLoginStatus();
+    },
+  },
 };
 </script>
 
@@ -194,8 +242,30 @@ export default {
 .v-tab {
   text-transform: none;
 }
-
+.dropdown-toggle::after {
+    display:none;
+}
+.logout {
+padding: 0;
+border: none;
+color:black;
+background: none; }
 .profileMenu span {
   color: black;
 }
+
+  @media only screen and (min-width: 768px) {
+  .options {
+    margin-left:20rem ;
+
+  }
+  .logout{
+    margin-left: 1.8rem;
+  }
+}
+.item{
+text-decoration: none;
+}
+
+
 </style>

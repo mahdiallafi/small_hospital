@@ -64,6 +64,7 @@ Route::group(['middleware'=>['auth:sanctum','role:admin']],function(){
 
 ///group of functions belognTo docto
 Route::group(['middleware'=>['auth:sanctum','role:doctor']],function(){
+  
 ///docot
  Route::get('/doctor/{id}',[DoctorController::class,'show'] );
  Route::post('/doctor',[DoctorController::class,'store'] );
@@ -81,6 +82,10 @@ Route::group(['middleware'=>['auth:sanctum','role:doctor']],function(){
  Route::post('/patients',[StatuesController::class,'store'] );
  Route::put('/patient/{id}',[StatuesController::class,'update'] );
  Route::delete('/patient/{id}',[StatuesController::class,'destroy']);
+
+///doctor see his appointment 
+
+
 });
 
 ///group of functions belongTo  user
@@ -95,6 +100,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function() {
 
  Route::get('/appointment/{id}',[AppointmentController::class,'show'] );
  Route::post('/appointment',[AppointmentController::class,'store'] );
+ Route::get('/email',[ServiceController::class,'send'] );
  Route::put('/appointment/{id}',[AppointmentController::class,'update'] );
  Route::delete('/appointment/{id}',[AppointmentController::class,'destroy'] );
 //user id 
@@ -119,11 +125,13 @@ Route::group(['middleware'=>['auth:sanctum','role:user|doctor|admin']],function(
 });
 
 
-
+Route::get('/doctor/{id}/services',[DoctorController::class,'item'] );
 ///services Api
 Route::get('/services',[ServiceController::class,'index']);
 Route::get('/service/{id}',[ServiceController::class,'show'] );
 Route::get('/service/{id}/doctors',[ServiceController::class,'show_List'] );
+Route::get('/doctor/appointments/{id}',[DoctorController::class,'items'] );
+
 ///search Api
 Route::get('/services/search/{name}',[ServiceController::class,'search'] );
 

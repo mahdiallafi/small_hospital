@@ -1,9 +1,6 @@
 <template>
-  <div>
-     <Navbar />
- 
-   <div class=" container d-flex justify-center">
-<!--     <div class="row">
+  <div >
+    <!--     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">List of doctors</div>
@@ -33,47 +30,60 @@
             </div>
         </div>
     </div> -->
-   <v-card  v-for="doctor in doctors" v-bind:key="doctor.id" 
-    class="mx-auto "
-    max-width="300"
-  >
-    <v-img
-      class="white--text align-end"
-      height="130px"
-      src="https://rb.gy/rnnzki"
-    >
-      <v-card-title class="d-flex justify-center text-dark">{{doctor.name}}</v-card-title>
-    </v-img>
+    <Navbar/>
+    <div class="my-10">
+   
 
-    <v-card-subtitle class="pb-0">
-    {{doctor.age}}
-    </v-card-subtitle>
+  <div>
+	<div class="d-flex justify-content-center flex-wrap">
 
-    <v-card-text class="text--primary">
-      <div>emsil address</div>
+	
+        <v-card
+          v-for="doctor in doctors"
+          v-bind:key="doctor.id"
+          class="items mx-2 my-2"
+        	max-width="20rem"
+        >
+          <v-img
+            class="white--text align-end"
+            src="https://rb.gy/rnnzki"
+			height="10rem"
+          >
+            <v-card-title class="d-flex justify-center text-dark">{{
+              doctor.id
+            }}</v-card-title>
+          </v-img>
 
-      <div>{{doctor.eamil}}</div>
+          <v-card-subtitle class="pb-0">
+            <div>Clinic name</div>
+            {{ doctor.clinic_name }}
+          </v-card-subtitle>
 
-         <div>work days </div>
+          <v-card-text class="text--primary">
+            <div>Address</div>
 
-      <div>{{doctor.Free_days}}</div>
-    </v-card-text>
+            <div>{{ doctor.clinic_location }}</div>
 
-    <v-card-actions>
-     
+            <div>work days</div>
 
-      <v-btn
-      class="d-flex justify-center"
-        color="orange"
-        text
-      >
-      book
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+            <div>{{ doctor.Free_days }}</div>
+          </v-card-text>
 
-   </div> </div> 
- <!--  <div>
+          <v-card-actions>
+            <v-btn class="d-flex justify-center" color="orange" text>
+              <router-link
+                :to="{ name: 'Appointment', params: { id: doctor.id } }"
+              >
+                Explore</router-link
+              >
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+		</div>
+  </div>
+  </div>
+  </div> 
+  <!--  <div>
     <Navbar />
 
     <div class="p-5">
@@ -112,9 +122,6 @@
       </v-card>
     </div>
   </div> -->
-
-
-
 </template>
 
 <script>
@@ -124,35 +131,60 @@ export default {
   data: function () {
     return {
       doctors: [],
-       isLoggedIn: false,
+      token: localStorage.getItem("token"),
+      isLoggedIn: false,
     };
   },
   components: {
     Navbar,
   },
-  /* methods: {
+  methods: {
     loadUsers() {
-      axios.get('/api/service/'+this.$route.params.id+'/doctors').then(({ data }) => (this.services = data.data));
-      console.log(data.data)
+      axios
+        .get("/api/service/" + this.$route.params.id + "/doctors")
+        .then((response) => {
+          this.isLoggedIn = false;
+          ///    this.doctors=response.data.data
+          this.doctors = response.data;
+          ///    console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
+
+    checkLoginStatus() {
+      this.loading = true;
+      // this.loading = true
+      axios
+        .get("/api/user", {
+          headers: {
+            Authorization: "Bearer " + this.token,
+          },
+        })
+        .then((response) => {
+          this.currentUser = response.data;
+          console.log("LOGGED IN");
+          this.isLoggedIn = true;
+          console.log(this.currentUser.name);
+        })
+        .catch((errors) => {
+          console.log(errors);
+          this.isLoggedIn = false;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+      // this.loading = false
     },
   },
-  created() {
-    this.loadUsers();
-  }, */
+  created() {},
 
- mounted() {
-        axios.get('/api/service/'+this.$route.params.id+'/doctors')
-            .then(response => {
-              this.isLoggedIn= false
-          ///    this.doctors=response.data.data
-          this.doctors=response.data;
-        ///    console.log(response.data);
-        })
-        .catch((error)=> {
-            console.log(error.message);
-        });
- }
-/*  mounted() {
+  mounted() {
+    this.checkLoginStatus();
+    this.loadUsers();
+  },
+  /*  mounted() {
          axios.get('/api/service/'+this.$route.params.id+'/doctors').then(({ data }) => (this.doctors = data.data));
       console.log(this.doctors)
     }  */
@@ -160,4 +192,7 @@ export default {
 </script>
 
 <style>
+.items{
+	flex: 1 !important;
+}
 </style>

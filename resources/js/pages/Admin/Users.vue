@@ -15,8 +15,8 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Edit</th>
-                            <th>delete</th>
+                            <!-- <th>Edit</th>
+                            <th>delete</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -24,19 +24,8 @@
                             <td>{{user.name}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.role}}</td>
-                            <td><a href="#"><v-icon
-      large
-      color="teal darken-2"
-    >
-      mdi-application-edit
-    </v-icon></a></td>
-                            <td><a href="#"><v-icon
-      large
-      color="teal darken-2"
-    >
-      mdi-delete
-    </v-icon></a></td>
-                          </tr>
+                           
+                          </tr> 
                       </tbody>
                     </table>
                 </div>

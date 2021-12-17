@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -42,6 +44,7 @@ class AppointmentController extends Controller
             'app_time'=>'required',
             'Fre_places'=>'required',
             'user_id'=>'required',
+            'doctor_id'=>'required',
               ]);
         
               return  Appointment::create($request->all());
@@ -55,8 +58,10 @@ class AppointmentController extends Controller
      */
     public function show( $appointment)
     {
-        $appointments = Appointment::findOrFail($appointment);
-        return $appointments ;
+        ///$user=Appointment::with(['username'])->where('doctor_id', $id)->latest()->get();  
+        $appointments = Appointment::with(['doctorname'])->where('user_id', $appointment)->latest()->get();
+        return $appointments;
+      
     }
 
     /**
@@ -69,6 +74,18 @@ class AppointmentController extends Controller
     {
         $appointments = Appointment::findOrFail($appointment);
         return $appointments ;
+    }
+    
+    public function send(){
+               $data = request()->validate([
+                'app_date'     =>  'required',
+                'app_time'  =>  'required|email',
+                'Fre_places' =>  'required'
+            ]);
+    
+            Mail::to('clinic@gmail.com')->send(new SendMail($data));
+    
+            return redirect()->back();
     }
 
     /**

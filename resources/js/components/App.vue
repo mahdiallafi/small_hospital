@@ -13,7 +13,7 @@
   </router-view>
 
 
- <Footer/>
+
 </v-app>
  
 

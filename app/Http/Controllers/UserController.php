@@ -91,6 +91,8 @@ class UserController extends Controller
         $users= User::find($user);
         $users->update($request->all());
         return  $users;
+
+        
     }
 
     /**
